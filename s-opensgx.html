@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="korean">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  S-OpenSGX: A system-level platform for exploring SGX enclave-based computing | About Hyeseon
+</title>
+  <link rel="canonical" href="/s-opensgx.html">
+
+
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
+
+  
+  <meta name="description" content="S-OpenSGX는 SGX의 더 깊은 연구를 위해 시스템 레벨에서 SGX를 모사하는 에뮬레이터입니다.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="/">About Hyeseon</a></h1>
+      <p class="text-muted">오혜선이 그간 밟아왔던 발자취들</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  S-OpenSGX: A system-level platform for exploring SGX enclave-based computing
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-04T22:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          화 04 7월 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="/category/publications.html">Publications</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="/tag/publication.html">#publication</a>,               <a href="/tag/research.html">#research</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>논문에 대해</h1>
+<figure style="float: right; max-width: 300px; width: auto; height: auto;"><img class="img-fluid" src="/images/s-opensgx/fig-1.png"/><figcaption>Fig. 1 - 기존 SGX 에뮬레이션 접근 (OpenSGX)과 본 논문에서의 SGX 에뮬레이션 접근 (S-OpenSGX)의 차이.</figcaption></figure>
+<p>신뢰 실행 환경의 연구는 해당 환경이 탑재된 하드웨어가 필요하다는 점이 제일 큰 장벽입니다. 특히 Intel SGX의 경우 더 한정적으로 발매된 하드웨어에만 탑재되어 있는데다가 그보다도 최신의 사양 변경인 SGX V2의 경우 당시에는 발매된 하드웨어 자체가 없었습니다. 이런 점은 연구에 있어 장벽이 될 수 있기에 그 대신 소프트웨어 에뮬레이션을 통해 신뢰 실행 환경의 연구가 가능하도록 하는 접근을 꾀했습니다. 기존 연구인 <a href="https://taesoo.kim/pubs/2016/jain:opensgx.pdf">OpenSGX</a>의 경우 user level QEMU를 이용해 SGX의 기능을 구현하였는데, 실제 SGX 앱을 빌딩하는 과정과 불일치하는 부분이 있어 막상 실제 SGX 앱은 구동할 수 없는데다가 페이지 테이블 구조 등의 수정이 불가능하여 완전한 SGX의 에뮬레이션은 궁극적으로 불가능했습니다.</p>
+<p>이에 대한 대안으로 OpenSGX보다 한 단계 나아가서 system level QEMU에 SGX를 구현하기로 한 것이 S-OpenSGX입니다. 시스템 레벨에서 구현함으로써 Intel SGX 하드웨어에 대해 컴파일된 앱의 실행도 가능해지며, 페이지 테이블 구조 등의 수정이 가능해지는 것은 물론이고 하드웨어 그 자체를 모사하기 때문에 실기가 있더라도 접근할 수 없는 부분, 그러니까 SGX V2의 수정사항이나 아예 하드웨어의 수정사항을 제안하는 것도 가능해집니다.</p>
+<p>System level 에뮬레이션을 구현하는 것은 그렇게 간단하지 않았습니다. 가상 주소 자체를 다르게 쓰는 점, 주소 비교, 무엇보다 SGX의 기능 그 자체를 유사 소자 레벨에서 구현하는 것 등을 system level의 QEMU에 그대로 구현하는 것은 쉬운 일이 아니었으나, 이를 구현하여 실제 system level 에뮬레이션을 구현했습니다. 아울러 일반적인 SGX 모델에서 대처하기 힘들었던 공격을 대처할 수 있는 SGX의 수정사항을 보임으로써 system level 에뮬레이션으로만 얻을 수 있는 학술적인 이득에 대해 다루었습니다.</p>
+<h1>참여 정보</h1>
+<ul>
+<li><strong>연구/집필 소요 기간</strong>: 2015.09 ~ 2017.05</li>
+<li><strong>참여 인원 및 기여도</strong>: 작성자 6인 중 5순위 (+ 책임저자 1인)</li>
+<li><strong>역할</strong>: 시스템 레벨 에뮬레이터의 개발 및 버그 수정</li>
+<li><strong>사용 기술</strong>: <strong>C</strong> (QEMU 등)</li>
+</ul>
+<h1>영문 초록</h1>
+<p>Intel recently introduced Software Guard Extensions (SGX) to enable applications to protect their selected code and data from privileged platform software. As it draws wider attention from the security research community, an open-source emulator for SGX (OpenSGX) has been developed to allow researchers to explore the SGX environment. To the best of our knowledge, OpenSGX is currently the only publicly available SGX emulation platform; however, its system-level support is largely limited owing to its user-mode emulation. In particular, experiments that require system functionalities or device emulation cannot be conducted with the current OpenSGX. To solve this problem, we propose System-OpenSGX (S-OpenSGX), which leverages QEMU's system emulation to provide researchers with full system-level support for exploring SGX enclave-based programming. In this paper, we show the design of S-OpenSGX, including system functionalities such as scheduling, multithreading, page table handling, and SGX paging. Non-trivial issues derived from the difference between user-mode and system emulation, and our approaches to addressing them are also described. Lastly, we utilize S-OpenSGX to experiment with a new mitigation method against the data leaking attack on enclave threads and an APIC (Advanced Programmable Interrupt Controller) device modification to reduce SGX's mode switch overhead.</p>
+<h1>참조 링크</h1>
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0167404817301256">Computers &amp; Security 아티클 페이지</a></li>
+<li><a href="/etc/sopensgx.pdf">PDF 원문</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>
