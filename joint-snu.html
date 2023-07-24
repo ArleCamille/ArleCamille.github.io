@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  시스템 침입 탐지를 위한 프로세서 모니터링 기술 및 주요 HW/SW 모듈 개발 | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/joint-snu.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/theme.css">
+
+  
+  <meta name="description" content="서울대학교 보안최적화연구실과 협업하여 정보통신기획평가원에 제안하고 수행한 연구 과제입니다.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/pages/about-me.html">저에 대해</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  시스템 침입 탐지를 위한 프로세서 모니터링 기술 및 주요 HW/SW 모듈 개발
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-06T14:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          목 06 7월 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/category/joint-research-projects.html">Joint Research Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/tag/research.html">#research</a>,               <a href="https://arlecamille.github.io/tag/research-project.html">#research-project</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-globe"></i>
+              <a href="https://arlecamille.github.io/joint-snu-en.html">en</a>
+          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>과제에 대해</h1>
+<p>커널 권한을 얻은 악성코드는 은닉 및 방어가 보통의 악성코드에 비해 굉장히 단단한 편이기 때문에 일반적인 방식으로 탐지 및 처치가 곤란합니다. 당시 기준으로 이런 커널 권한의 악성 코드를 방어하기 위해서는 커널 메모리 영역이나 메모리 매핑 영역을 커널조차도 건드릴 수 없는 신뢰되는 권한 위에서 감시하는 것이 현실적인 방안이었습니다.</p>
+<p>접근은 크게 소프트웨어 기반 접근과 하드웨어 기반 접근으로 나뉩니다. 소프트웨어 기반 접근은 하이퍼바이저와 같이 커널이 건드릴 수 없는 영역에 상주하면서 감시하는 영역에 대한 쓰기 행위가 일어나면 그 행위를 트랩하여 적절한 조치를 취합니다. (간단한 예시로는 수정 자체를 거부하고 원복할 수도 있습니다.) 반면 하드웨어 기반 접근은 커널 메모리나 매핑 영역에 해당하는 부분을 하드웨어의 레지스터에 저장한 뒤, 하드웨어가 메모리 버스를 감시하면서 해당 영역에 대한 수정 행위가 일어나면 인터럽트나 디바이스 재부팅 등의 조치를 취합니다. 소프트웨어 기반 접근은 호스트의 역량을 똑같이 활용하기에 저장 공간과 논리 연산에 제약이 없어 유연한 탐지가 가능하지만 이중 페이징 (nested paging) 등 소프트웨어를 적재하고 높은 권한 수준에서 실행하는 데 필요한 성능 오버헤드 때문에 호스트의 성능에 영향을 줍니다. 반면 하드웨어 기반 접근은 호스트의 성능을 거의 활용하지 않기 때문에 빠르지만 독립된 하드웨어가 가질 수 있는 레지스터 등 저장 공간에는 한계가 있어 유연한 탐지가 어렵습니다.</p>
+<p>본 과제에서는 두 접근의 장점을 모으고 단점을 상쇄하기 위해 소프트웨어와 하드웨어 기반 설계를 통섭하는 새로운 형식의 설계를 도입하였습니다. 소프트웨어 기반 설계에서 사용하는 권한 레벨 (실증 논문 Hypernel의 경우에는 ARM의 하이퍼바이저 권한인 EL2)에 작은 소프트웨어를 적재하되, 이중 페이징 등은 사용하지 않고 커널의 메모리 매핑을 권한 영역의 메모리 매핑으로 그대로 사용합니다. 호스트 메모리에 하드웨어가 탐지해야 할 영역을 비트맵 형태로 남겨둡니다. 그 뒤 메모리 버스에 쓰기 이벤트가 일어나면 하드웨어는 이 비트맵을 참조해서 탐지해야 할 영역이면 쓰기 이벤트를 기록한 뒤 인터럽트로 소프트웨어를 호출합니다. 소프트웨어 측이 이후 인터럽트를 인계받아서 처리하는 방식입니다.</p>
+<h1>참여 정보</h1>
+<ul>
+<li><strong>과제 참여 기간</strong>: 2015.10 ~ 2017.11</li>
+<li><strong>참여 인원</strong>: 총 4인</li>
+<li><strong>역할</strong></li>
+<li>탐지 소프트웨어 및 하드웨어의 펌웨어 설계에 기여</li>
+<li>관련 논문 공동1저자 (<a href="https://arlecamille.github.io/hypernel.html">Hypernel</a>)</li>
+</ul>
+<h1>참조 링크</h1>
+<ul>
+<li>관련 저작물: <a href="https://arlecamille.github.io/hypernel.html">Hypernel</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

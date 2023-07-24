@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Hypernel: A Hardware-Assisted Framework for Kernel Protection without Nested Paging | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/hypernel-en.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/theme/css/theme.css">
+
+  
+  <meta name="description" content="Hypernel is a detection solution for kernel-level malwares while improving the existing H/W-based and S/W-based detection solutions.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/pages/about-me.html">저에 대해</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Hypernel: A Hardware-Assisted Framework for Kernel Protection without Nested Paging
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-04T22:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          화 04 7월 2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/category/publications.html">Publications</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/tag/publication.html">#publication</a>,               <a href="https://arlecamille.github.io/tag/research.html">#research</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-globe"></i>
+              <a href="https://arlecamille.github.io/hypernel.html">ko</a>
+          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Paper</h1>
+<div style="float: right; width: 300px;">
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/images/hypernel/fig1.png"/>
+<figcaption>Fig. 1 - Summary. The MBM and the security solution communicate through the Hypersec agent.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/images/hypernel/fig2.png"/>
+<figcaption>Fig. 2 - The software architecture. Basically the kernel page table is set as read-only such that only Hypernel can modify it.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/images/hypernel/fig3.png"/>
+<figcaption>Fig. 3 - The architecture of the Memory Bus Monitor (MBM). Fetches the write events from the memory controller and compares it with the bitmap on the host memory. Then, if the write event is against the region in the bitmap, raise an interrupt to call Hypersec.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/images/hypernel/fig4.png"/>
+<figcaption>Fig. 4 - The detection logic. Through the process which will be elaborated in the article, the hardware and the software closely work together to quickly detect the write event against the kernel memory region.</figcaption>
+</figure>
+</div>
+<p>Since kernel-level malwares are hard to detect with ordinary security solutions, a specialized "kernel monitor" which taps on the kernel memory region to detect such malwares was deemed essential. When the paper was published, kernel monitors were divided into hardware-based ones, which sacrificed flexibility for speed, and software-based ones, which sacrificed host performance for flexibility. Hardware-based monitors have small memory such that they are harder to compensate for malware evolution or respond to more kinds of malwares. On the other hand, software-based monitors at that time suffered from the performance overhead from nested paging, like virtualization solutions. This meant that a system with a software-based monitor suffered from a performance overhead close to operating system (OS) virtualization while there was only one OS running.</p>
+<p>Hypernel targets the ARM system-on-a-chip (SoC), which runs on mobile devices. On it, both software-based approaches, which suffer from virtualization-level overhead, and hardware-based approaches, which are not flexible, were not sufficient. To overcome this seemingly impossible requirements, Hypernel mixed up software-based and hardware-based approaches. Hypernel injects a security monitor at exception level 2 (EL2), which is generally used by a hypervisor, but it does not perform nested paging and uses the kernel-level (EL1) page table as-is while recording regions to monitor on the separate host memory region. After Hypernel marks regions to detect, when there is a write event on the memory bus, the hardware detects it and if it must be reported according to the marking, interrupts to call Hypersec. On an actual ARM device, the runtime performance overhead was only about 3.1%.</p>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Research and Writing</strong>: 10/2015 ~ 11/2017</li>
+<li><strong>Contribution among Total Participants</strong>: Co-first author among five writers (+ two corresponding authors)</li>
+<li><strong>Role</strong>: Co-first author</li>
+<li>Supervised the paper's direction and writing</li>
+<li>Software design</li>
+<li><strong>Technology Used</strong>: <strong>ARM low-level programming</strong> (ARM assembly, UEFI, C, etc.), <strong>FPGA</strong>, <strong>embedded Linux</strong></li>
+</ul>
+<h1>Abstract</h1>
+<p>Large OS kernels always suffer from attacks due to their numerous inherent vulnerabilities. To protect the kernel, hypervisors have been employed by many security solutions. However, relying on a hypervisor has a detrimental impact on the system performance due mainly to nested paging. In this paper, we present Hypernel, a security framework combining hardware and software components to address this problem. Hypersec, the software component, provides an isolated execution environment for security solutions, and the hardware monitor component enables a word-granularity monitoring capability on the kernel memory. Our evaluation shows that Hypernel efficiently fulfills the role of a security framework, while imposing mere 3.1% of runtime overhead on the system.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3195970.3196061">DAC article page</a></li>
+<li><a href="https://arlecamille.github.io/etc/hypernel.pdf">Full-text paper</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>
