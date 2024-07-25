@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Anti ARP-Spoofer | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/anti-arp-spoofer.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="An ARP spoofing defense program using a simple state table.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Anti ARP-Spoofer
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-06T16:00:00+09:00">
+          <i class="fas fa-clock"></i>
+          06/07/2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/personal-projects.html">Personal Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/project.html">#project</a>,               <a href="https://arlecamille.github.io/en/tag/personal.html">#personal</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>For a term project, we considered security vulnerabilities which could endanger everyday life while technically being elementary. From that perspective, we considered ARP spoofing, in which the attacker intrudes into an externally exposed server and disturb a local-area network, as our main attack scenario. We devised a scenario in which a MediaWiki vulnerability is used to deliver an ARP spoofing payload, while considering a method to defend from ARP spoofing while another machine is being compromised.</p>
+<p>In this project, we exploited the fact that a valid owner of an IP-MAC address pair would send a gratuitous ARP packet (gARP packet) even there is no request for an ARP query. By referring to the hosts' gARP and initial ARP table before attack, we could reliably find a valid mapping between IP addresses and MAC addresses.</p>
+<h2>Response to ARP query and responses</h2>
+<p>If a client sent an ARP query, according to the answer, we react as the following:
+- If there is only one ARP response, we consider it as a benign scenario, passing the response to the system.
+- If there are multiple ARP responses but one of them belongs to the current valid mapping, we consider the rest of them as attacker(s) and ignore the response.
+- If there are multiple ARP response and none of them belongs to the current valid mapping, find which of the hosts sent gARP before. The host with a gARP log would be the rightful owner of the IP-MAC address pair, because sending a gARP as an attack would be a risky behavior.
+- Else, the scenario cannot be judged, and is reported.</p>
+<h2>Low-level implementation</h2>
+<p>Since we needed to quickly implement the prototype, we only implemented the part where we parse the input ARP packet. We instead invoked the <code>arptables</code> command of Linux to modify the system ARP mapping.</p>
+<h1>Figures</h1>
+<figure><img class="img-fluid" src="https://arlecamille.github.io/en/images/arp1.jpg" style="width: 100%;"/><figcaption>Fig. 1 - In this scenario, since Anti ARP-Spoofer is in action, ARP table was not modified despite an ARP spoofing attempt.</figcaption></figure>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Development</strong>: 9/2016 ~ 12/2016</li>
+<li><strong>Total Particiapnts</strong>: 2 people</li>
+<li><strong>My Roles</strong>: entire programming</li>
+<li><strong>Used Tech Stacks</strong>: <strong>Python</strong>, <strong>networking</strong>, <strong>Linux</strong></li>
+</ul>
+<h1>Downloads</h1>
+<ul>
+<li><a href="https://arlecamille.github.io/en/etc/anti-arp-spoofer.tar.gz">the report and the source code for the project</a></li>
+</ul>
+<p>Note that the report is in Korean, and the report states my name as Kuenwhee Oh (오근휘), which was my name before change.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

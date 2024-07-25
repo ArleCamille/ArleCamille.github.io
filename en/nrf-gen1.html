@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Research for Improvement of Security, Versatility & Application of Trusted Execution Environment | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/nrf-gen1.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="The first wave of research efforts with TEEs for NRF.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Research for Improvement of Security, Versatility & Application of Trusted Execution Environment
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-07-25T22:55:00+09:00">
+          <i class="fas fa-clock"></i>
+          25/07/2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/joint-research-projects.html">Joint Research Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/research.html">#research</a>,               <a href="https://arlecamille.github.io/en/tag/research-project.html">#research-project</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>This project is a collective effort for expanding TEEs' (trusted execution environments) security and versatility, and also surveying on their uses. My efforts on this project spans on the following areas.</p>
+<h2>Implementing the Emulator for a TEE</h2>
+<p>Upon researching with TEEs, the greatest barrier is that we require the real device to research on it. This rarely acts for a barrier with TrustZone since most ARM devices are TrustZone-capable and ARM Holdings is also known for actively providing reference virtual environments for them. However, Intel SGX (Software Guard Extensions), which was emerging in that period, was scarcely deployed at that time. What even complicated the issue further is that the state-of-the-art version of SGX, which is SGX V2, was not yet implemented on any real hardware whatsoever back then.</p>
+<p>With this background, we saw a need for a TEE emulator to avoid research efforts becoming vain ones. Based on <a href="https://taesoo.kim/pubs/2016/jain:opensgx.pdf">OpenSGX</a>, which implemented SGX commands on QEMU via reverse-engineering public SGX documents, we went even further to devise <a href="https://arlecamille.github.io/en/s-opensgx.html">S-OpenSGX</a>. S-OpenSGX went even further and lowered the emulation level to the system level, allowing production-level to be executed in theory. We also proved that we could simulate SGX V2 specifications or even hypothesize a modification for it in the effort.</p>
+<p>The <a href="https://arlecamille.github.io/en/s-opensgx.html">S-OpenSGX</a> paper covers more on this topic.</p>
+<h2>Combination of inter-device TEEs</h2>
+<p>Since <a href="https://arlecamille.github.io/en/joint-snu.html">the System Intrusion project</a> also covers this effort, I will explain only some points which don't overlap with that project. Via the combination of a hardware-based TEE and a software-based TEE, we could also devise a new TEE which acts as a hybrid combining features of different TEEs.</p>
+<p>For more details including technical points, see <a href="https://arlecamille.github.io/en/joint-snu.html">the System Intrusion project page</a> and <a href="https://arlecamille.github.io/en/hypernel.html">the Hypernel paper page</a>.</p>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Contribution</strong>: 3/2017 ~ 12/2019</li>
+<li><strong>Total Participants</strong>: around 7 people</li>
+<li><strong>My Roles</strong></li>
+<li>Contribution at emulator implementation and combination of multiple TEEs</li>
+<li>Co-first author of the related paper (<a href="https://arlecamille.github.io/en/hypernel.html">Hypernel</a>)</li>
+<li>Participating author of the related paper (<a href="https://arlecamille.github.io/en/s-opensgx.html">S-OpenSGX</a>)</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li>Related publications</li>
+<li><a href="https://arlecamille.github.io/en/hypernel.html">Hypernel</a></li>
+<li><a href="https://arlecamille.github.io/en/s-opensgx.html">S-OpenSGX</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

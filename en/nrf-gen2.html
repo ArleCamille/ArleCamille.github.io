@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Trusted Execution Environment (TEE) for Securing AI Accelerators and Data-Centric Applications | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/nrf-gen2.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="The second wave of research efforts with TEEs for NRF.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Trusted Execution Environment (TEE) for Securing AI Accelerators and Data-Centric Applications
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-07-25T23:15:00+09:00">
+          <i class="fas fa-clock"></i>
+          25/07/2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/joint-research-projects.html">Joint Research Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/research.html">#research</a>,               <a href="https://arlecamille.github.io/en/tag/research-project.html">#research-project</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>This project is a joint effort for enhancing data security and privacy for artificial intelligence (AI) and machine learning using TEEs (trusted execution environments).</p>
+<p>Since CPUs are not that specialized for powering the AI, most of the AI efforts are primarily focused on utilizing GPUs or dedicated accelerators. Among them, I focused on securing the GPUs. This is because existing TEEs focus on protecting CPUs while peripherals are generally not yet being protected at that period. Only ARM TrustZone had limited efforts for protecting them by controlling the devices under exception level 3 (EL3).</p>
+<p>I strived to protect the GPUs while not significantly trading off their performances. Existing efforts for securing GPUs with TEEs required some degree of modification of existing GPUs and/or the hardware stack, which I did not desire. Therefore I only tried to secure the device only using software modules. Modifying OP-TEE and TrustedFirmware-A, which are well-known wrapping TEEs for ARM TrustZone, I modified the software stack such that the GPU memory area could be accessed from the EL3, while modifying the driver on the kernel which runs on EL1 to allow it to communicate with the TEE. There were also security measures for EL1 since EL1 drivers cannot fully trusted. Based on <a href="https://www.cylab.cmu.edu/_files/pdfs/tech_reports/CMUCyLab18003.pdf">Virgil's concept</a>, I tried to implement security measures which allowed the GPU to confidentially communicate with EL3 while utilizing untrusted GPU drivers.</p>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Contribution</strong>: 9/2020 ~ 8/2022</li>
+<li><strong>Total Participants</strong>: around 6 people</li>
+<li><strong>My Roles</strong>: contribution at implementing a GPU TEE</li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

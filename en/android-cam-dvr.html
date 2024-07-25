@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  A real-time recording and DVR app for Android | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/android-cam-dvr.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="A camcorder app for Android which records the video real-time and has a rudimentary DVR feature like returning to the past or repeat a scene.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  A real-time recording and DVR app for Android
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-07-26T00:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          26/07/2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/contracted-projects.html">Contracted Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/project.html">#project</a>,               <a href="https://arlecamille.github.io/en/tag/contracted.html">#contracted</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>The client wanted to see and/or repeat an old highlight which he would frequently miss during a baseball game, and requested the development of a DVR-capable proof-of-concept real-time camcorder app. To satisfy the request, I developed an "instant replay"-like camcorder app for an Android device.</p>
+<h2>Implementation of Core Functionalities</h2>
+<p>Since the app should use the device space conservatively while continuously recording, the max recording time should match the max return time (in this case, 1 hour). Also, to prevent the issue in which playback would be interfered by recording, each file should be small enough (in this case, 5-minute-long).</p>
+<p>During the process, the frames being recorded must not be dropped. Instead, leftover frames from previous videos must be transiently recorded to the next video. Therefore, I needed to segregate the recording process and the transcoding process. For that, <a href="https://github.com/pedroSG94/RootEncoder">RootEncoder</a> suited my purpose better than methods which other camera apps use. I modified it such that a local file could instead be used for that library.</p>
+<p>However, what proved to be a real challenge was showing old recordings real-time. A naive thought on this problem would be exposing a media player and changing the underlying file when playing one file ends. However, doing this on Android's vanilla media player proved to cause stuttering and desync. After multiple attempts, <a href="https://github.com/google/ExoPlayer">ExoPlayer</a> proved to suit our purpose. Also, for accurate playback, the recording timestamp is fed back to the player not to lose the sub-video granularity of the timestamp.</p>
+<h2>Problem Solving</h2>
+<p>For implementing the dual-camera feature, I initially thought of opening two cameras simultaneously, but this caused some problem on the client's device. The client's device did not support recording from two cameras at once, thus I instead decided to change the camera during the recording if the dual recording is unsupported. Although this interferes with the DVR feature, this was an unfortunate limitation coming from low-cost Android devices.</p>
+<h1>이미지 자료</h1>
+<figure><img class="img-fluid" src="https://arlecamille.github.io/en/images/android-cam-dvr.jpg" style="width: 33%;"/><figcaption>Fig. 1 - The user interface of the resultant software. At the bottom, the DVR user interface is toggle-button-oriented as the client requested.</figcaption></figure>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Development</strong>: 11/2022 ~ 12/2022</li>
+<li><strong>Total Participants</strong>: alone</li>
+<li><strong>My Roles</strong>: entire design and development</li>
+<li><strong>Used Tech Stacks</strong>: <strong>Java</strong> for Android</li>
+</ul>
+<p>I cannot provide the actual software and/or the entire source code due to the NDA.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

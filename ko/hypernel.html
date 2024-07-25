@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Hypernel: A Hardware-Assisted Framework for Kernel Protection without Nested Paging | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/ko/hypernel.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/ko/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/ko/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/ko/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/ko/theme/css/theme.css">
+
+  
+  <meta name="description" content="Hypernel은 이중 페이징이나 하드웨어의 협소한 탐지 폭에 기대지 않고 커널 수준 악성코드를 탐지할 수 있는 솔루션입니다.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/ko/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/ko/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/ko/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/ko/pages/about-me.html">저에 대해</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Hypernel: A Hardware-Assisted Framework for Kernel Protection without Nested Paging
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-04T22:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          2023년 07월 04일
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/ko/category/publications.html">Publications</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/ko/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/ko/tag/publication.html">#publication</a>,               <a href="https://arlecamille.github.io/ko/tag/research.html">#research</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>논문에 대해</h1>
+<div style="float: right; width: 300px;">
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/ko/images/hypernel/fig1.png"/>
+<figcaption>Fig. 1 - 개요. 하드웨어와 보안 솔루션이 Hypersec 에이전트를 통해 통신하는 구조.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/ko/images/hypernel/fig2.png"/>
+<figcaption>Fig. 2 - 소프트웨어 구조. 기본적으로 커널 페이지 테이블은 읽기 전용으로 되어 있어서 Hypersec만 수정 권한이 있다.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/ko/images/hypernel/fig3.png"/>
+<figcaption>Fig. 3 - 하드웨어 구조. 메모리 컨트롤러와의 인터페이스를 통해 쓰기 이벤트를 받아와 호스트 메모리에 있는 테이블과 대조하여 보안 솔루션이 감시해야 하는 이벤트라면 인터럽트를 걸어서 Hypersec을 호출한다.</figcaption>
+</figure>
+<figure>
+<img class="img-fluid" src="https://arlecamille.github.io/ko/images/hypernel/fig4.png"/>
+<figcaption>Fig. 4 - 탐지 로직. 본문에 설명할 일련의 과정에 의해 하드웨어와 소프트웨어의 공조로 빠르게 커널 쓰기 이벤트를 탐지한다.</figcaption>
+</figure>
+</div>
+<p>일반적인 수준의 악성코드 탐지가 어려운 커널 수준에서는 더 높은 권한을 가지고 있는 하드웨어나 소프트웨어를 이용하여 악성코드를 탐지하는 소위 '커널 모니터'의 존재가 필연적입니다. 해당 논문이 발표될 시점에서 기존의 커널 모니터는 크게 탐지 유연성을 위해 디바이스의 속도를 희생한 소프트웨어 기반 모니터와 디바이스의 속도를 위해 탐지 유연성을 희생한 하드웨어 기반 모니터로 나눌 수 있었습니다. 하드웨어 기반 모니터는 기억장치가 협소하고 많은 것을 담기 힘들어 장래에 악성코드 환경이 변하거나 보안 솔루션에서 더 많은 악성코드에 대응하기를 원할 경우 한계가 있습니다. 반면 소프트웨어 기반 모니터는 보통의 가상화와 마찬가지로 '이중 페이징'이라고 하여 페이지 테이블 번역을 두 번 거쳐야 하는 문제점이 있는데, 사실상 일반 운영체제를 구동하는 데도 가상화 오버헤드가 걸리는 셈입니다.</p>
+<p>Hypernel은 모바일 기기에서 사용하는 ARM SoC를 타겟팅합니다. 이는 곧 가상화 수준의 오버헤드가 걸리는 소프트웨어 기반의 접근도, 장래 확장성에 한계가 있는 하드웨어 기반의 접근도 용납되지 않는다는 뜻입니다. 이런 딜레마를 타개하기 위해 Hypernel에서는 소프트웨어 기반의 접근과 하드웨어 기반의 접근을 혼합했습니다. 일반적으로 하이퍼바이저에서 사용하는 EL2 레벨을 사용하되, 이중 페이징은 하지 않고 EL1 (커널)의 페이지 테이블을 그대로 사용하며 DRAM상의 별개의 공간에 어느 공간을 실제로 감시해야 하는지 기록합니다. 소프트웨어가 이 공간에 탐지해야 할지 여부를 기록한 뒤, 커널 메모리에 쓰기 이벤트가 발생하면 하드웨어가 이를 잡아내어 탐지해야 하는 이벤트일 경우 EL2 쪽에 인터럽트를 넣는 식으로 작동합니다. 실제 ARM 기기에 실증하여 성능 오버헤드가 3.1%에 불과함을 밝혀냈습니다.</p>
+<h1>참여 정보</h1>
+<ul>
+<li><strong>연구/집필 소요 기간</strong>: 2015.10 ~ 2017.11</li>
+<li><strong>참여 인원 및 기여도</strong>: 작성자 5인 중 공동1저자 (+ 책임저자 2인)</li>
+<li><strong>역할</strong>: 공동1저자로서 논문의 방향성 및 집필 총괄. 소프트웨어 설계에 특히 큰 역할</li>
+<li><strong>사용 기술</strong>: <strong>ARM 저수준 프로그래밍</strong> (ARM assembly, UEFI, C 등), <strong>FPGA</strong>, <strong>Embedded Linux</strong></li>
+</ul>
+<h1>영문 초록</h1>
+<p>Large OS kernels always suffer from attacks due to their numerous inherent vulnerabilities. To protect the kernel, hypervisors have been employed by many security solutions. However, relying on a hypervisor has a detrimental impact on the system performance due mainly to nested paging. In this paper, we present Hypernel, a security framework combining hardware and software components to address this problem. Hypersec, the software component, provides an isolated execution environment for security solutions, and the hardware monitor component enables a word-granularity monitoring capability on the kernel memory. Our evaluation shows that Hypernel efficiently fulfills the role of a security framework, while imposing mere 3.1% of runtime overhead on the system.</p>
+<h1>참조 링크</h1>
+<ul>
+<li><a href="https://dl.acm.org/doi/abs/10.1145/3195970.3196061">DAC 아티클 페이지</a></li>
+<li><a href="https://arlecamille.github.io/ko/etc/hypernel.pdf">PDF 원문</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/ko/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/ko/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/ko/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/ko/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

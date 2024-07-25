@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  KT AI Makers Kit 커널 드라이버 버전업 | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/drafts/i2s-driver.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="Raspberry Pi 이전 모델용 I2S 장비를 Raspberry Pi 4 및 Linux 5.x에서 구동할 수 있도록 드라이버를 개수했습니다.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  KT AI Makers Kit 커널 드라이버 버전업
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-10T22:00:00+09:00">
+          <i class="fas fa-clock"></i>
+          10/07/2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/contracted-projects.html">Contracted Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/project.html">#project</a>,               <a href="https://arlecamille.github.io/en/tag/contracted.html">#contracted</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>프로젝트 요약</h1>
+<p>KT AI Makers Kit은 Raspberry Pi 장비에 사용할 수 있는 I2S 장비 (마이크로폰과 스피커 구성)와 기타 GPIO 입출력 장비 (LED와 버튼으로 구성)로 구성되어 있는 주변 장치로, GPIO 포트에 꽂은 뒤 드라이버를 설치해서 KT 음성 인식 장비나 기타 다른 마이크로폰과 스피커를 필요로 하는 수요에 사용할 수 있습니다. 본래 Raspberry Pi 3용으로 개발되어서 32비트 (ARMv7) Linux 4.x에 대응하기 때문에 Linux가 판올림되어 I2S와 관련된 ABI가 변경되고 64비트 OS를 사용할 수 있는 가능성이 본격적으로 대두된 Raspberry Pi 4 계통의 하드웨어에 호환되지 않았습니다.</p>
+<p>이 이슈에 대응하기 위해 먼저 I2S 장비 관련한 드라이버가 Linux 5.x의 ABI에 대응할 수 있도록 드라이버 코드베이스를 업데이트했습니다. 또한, 이슈를 점검하는 과정에서 있을 수 있는 다른 잠재적 이슈로는 Raspberry Pi 3용으로 본디 개발되었던 드라이버의 경우 커널 버전업에 대응하지 않고 특정한 커널 버전에서만 사용할 수 있는 문제가 있었는데, Over-the-air (OTA) update로 인해 최종 사용자가 어떤 커널 버전을 설치했을지 구체적으로 담보할 수 없는 상황에서는 업데이트를 거친 이후의 최신 버전의 커널에 대응하는 것이 더 낫다고 판단, ABI가 차후에 변화하지 않고 버전만 올라갈 경우에는 다시 드라이버를 컴파일해서 그대로 사용할 수 있도록 Arch Linux ARM 최소 환경 기반의 자동화된 빌드도 제공하였습니다.</p>
+<p>결과적으로 본 프로젝트에서 제가 대응한 부분은 크게 두 가지입니다.
+- I2S 드라이버를 최신 ABI에 대응
+- 소스 코드가 변화할 필요가 없을 경우 자동으로 최신 커널을 받아 거기에 맞춰 드라이버를 빌드하는 환경을 제작</p>
+<h1>이미지 자료</h1>
+<figure><img class="img-fluid" src="https://arlecamille.github.io/en/images/ai-makers-kit.jpg" style="width: 100%;"/><figcaption>Fig. 1 - 본 프로젝트의 대응 타깃 하드웨어인 KT AI Makers Kit.</figcaption></figure>
+<h1>참여 정보</h1>
+<ul>
+<li><strong>개발 기간</strong>: 2022.09</li>
+<li><strong>참여 인원</strong>: 단독 (단, 기존 작업물 유)</li>
+<li><strong>역할</strong>: 드라이버 버전업, 자동 빌드 시스템 구축</li>
+<li><strong>사용 기술</strong></li>
+<li>실제 드라이버 개발: <strong>C</strong> (Embedded Linux)</li>
+<li>자동 빌드 시스템 구축: <strong>컨테이너 기술</strong>, buildroot 등 최소 Linux 환경 구축 기술</li>
+</ul>
+<p>본 프로젝트는 NDA에 의해 결과물을 제시할 수 없는 점 양해 부탁드립니다.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

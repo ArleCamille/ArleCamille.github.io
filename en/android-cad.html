@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Pen mouse CAD app for Android | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/android-cad.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="An app for drawing using pointing devices (e.g., a pen mouse) with measurement proportional to actual measurement. Drawings could be exported to a DXF file, which could be read from a CAD program.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Pen mouse CAD app for Android
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-07-26T00:10:00+09:00">
+          <i class="fas fa-clock"></i>
+          26/07/2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/contracted-projects.html">Contracted Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/project.html">#project</a>,               <a href="https://arlecamille.github.io/en/tag/contracted.html">#contracted</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>The client requested a program which would allow a drawing proportional to the actual measurement. This goal was to digitize the sketch process while coating a car. The following is a non-exhaustive list for the software.</p>
+<ul>
+<li>Basic drawing features</li>
+<li>Straight lines, polygons, freehand drawing</li>
+<li>Inserting texts</li>
+<li>Inserting points, or starting shapes from points</li>
+<li>Change colors</li>
+<li>Basic navigation using the touchscreen</li>
+<li>Editing features like selection</li>
+<li>Save to internal storage</li>
+<li>Export to a CAD program</li>
+<li>Information such as color must not be lost during the progress</li>
+</ul>
+<p>There was an additional update planned to compensate the drawing using a gyro sensor, but was ultimately cancelled because the accuracy was not enough.</p>
+<h2>Implementation Details</h2>
+<p>The first release of the project was implemented as the following:</p>
+<ul>
+<li>For CAD compatibility, the internals of the internal file somewhat corresponds to the DXF file format</li>
+<li>Shapes are saved block-by-block</li>
+<li>A block can have multiple shapes. However, they must be connected.</li>
+<li>Separation of pointing device inputs and touch inputs</li>
+<li>Pointing device inputs are separately handled</li>
+<li>Basic multi-touch handling like pinch to zoom</li>
+<li>Segregate touch screen events from pointing device events</li>
+<li>Internal data structure consists of polygon, points and texts</li>
+<li>Curves are not supported because it would lead to unnecessary complexity, and the client would be post-processing the sketch from a CAD program anyway.</li>
+<li>Therefore, freehand drawing is actually implemented as a polygon with many points.</li>
+<li>DXF export is implemented by hooking to a JavaScript library</li>
+<li>React Native app was being used as a bridge</li>
+<li>In planned additional versions, I was going to use the in-app JavaScript feature from Jetpack instead.</li>
+</ul>
+<h1>Figures</h1>
+<figure><img class="img-fluid" src="https://arlecamille.github.io/en/images/android-cad.jpg" style="width: 33%;"/><figcaption>Fig. 1 - The user interface of the resultant software. It consists of a toolbar and the drawing UI.</figcaption></figure>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Contribution</strong></li>
+<li>First release: 11/2022 ~ 12/2022</li>
+<li>Planned additional features: 7/2023 ~ 9/2023 (cancelled)</li>
+<li><strong>Total Participants</strong>: alone</li>
+<li><strong>My Roles</strong>: entire designing and development</li>
+<li><strong>Used Tech Stacks</strong>: <strong>Kotlin</strong> for Android, React Native (used in the initial release for bridging with JavaScript code)</li>
+</ul>
+<p>I cannot provide the actual software and/or the entire source code due to the NDA.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>

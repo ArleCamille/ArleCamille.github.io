@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  S-OpenSGX: A system-level platform for exploring SGX enclave-based computing | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/s-opensgx.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="S-OpenSGX is a system-level SGX emulator for deeper research of Intel SGX.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  S-OpenSGX: A system-level platform for exploring SGX enclave-based computing
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2023-07-04T22:30:00+09:00">
+          <i class="fas fa-clock"></i>
+          04/07/2023
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/publications.html">Publications</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/publication.html">#publication</a>,               <a href="https://arlecamille.github.io/en/tag/research.html">#research</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Paper</h1>
+<figure style="float: right; max-width: 300px; width: auto; height: auto;"><img class="img-fluid" src="https://arlecamille.github.io/en/images/s-opensgx/fig-1.png"/><figcaption>Fig. 1 - Difference between the SGX emulator before (OpenSGX) and S-OpenSGX.</figcaption></figure>
+<p>Researching the trusted execution environment (TEE) obviously requires the hardware which is equipped with the environment. This was especially harmful in case of Intel Software Guard Extensions (SGX), which was only included in a limited subset of hardware and the more recent revision of SGX V2 was not even included in an actual chip. Since this could become a barrier for academic research, there were some researches which tried to instead simulate SGX with software-level emulation. There was an existing approach called <a href="https://taesoo.kim/pubs/2016/jain:opensgx.pdf">OpenSGX</a> which used the user-level QEMU to implement SGX functionalities. However, it had some problems like not being able to run actual SGX apps because running apps on it was different from running on an actual SGX-capable processor, and full SGX emulation was fundamentally impossible because some things like page table structure could not be modified from the user-level emulation.</p>
+<p>To overcome this issue, we took this approach one step further and strived to implement SGX capability on the system-level QEMU. From this, apps targeting actuial SGX hardware could be run, arbitrary structures could be modified, and since it emulates the entire hardware, we could go even further than the real machine like implementing SGX V2 modifications or suggesting hardware modification.</p>
+<p>Implementing the system-level emulation was not that simple. Differences on virtual address systems, address comparison, and most importantly, implementing the SGX functionality at the transistor-level was not that easy. However, we overcame these difficulties and implemented a system-level emulation of Intel SGX. Moreover, we showed that a system-level emulation of SGX was benefactory to researchers by providing a mitigation of an attack which the vanilla SGX is vulnerable against.</p>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Research and Writing</strong>: 9/2015 ~ 5/2017</li>
+<li><strong>Contribution among Total Participants</strong>: 5<sup>th</sup> among six authos (+ a corresponding author)</li>
+<li><strong>Role</strong>: Development of an emulator feature and bug fix</li>
+<li><strong>Technology Used</strong>: <strong>C</strong> (QEMU, etc.)</li>
+</ul>
+<h1>Abstract</h1>
+<p>Intel recently introduced Software Guard Extensions (SGX) to enable applications to protect their selected code and data from privileged platform software. As it draws wider attention from the security research community, an open-source emulator for SGX (OpenSGX) has been developed to allow researchers to explore the SGX environment. To the best of our knowledge, OpenSGX is currently the only publicly available SGX emulation platform; however, its system-level support is largely limited owing to its user-mode emulation. In particular, experiments that require system functionalities or device emulation cannot be conducted with the current OpenSGX. To solve this problem, we propose System-OpenSGX (S-OpenSGX), which leverages QEMU's system emulation to provide researchers with full system-level support for exploring SGX enclave-based programming. In this paper, we show the design of S-OpenSGX, including system functionalities such as scheduling, multithreading, page table handling, and SGX paging. Non-trivial issues derived from the difference between user-mode and system emulation, and our approaches to addressing them are also described. Lastly, we utilize S-OpenSGX to experiment with a new mitigation method against the data leaking attack on enclave threads and an APIC (Advanced Programmable Interrupt Controller) device modification to reduce SGX's mode switch overhead.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0167404817301256">Computers &amp; Security article page</a></li>
+<li><a href="https://arlecamille.github.io/en/etc/sopensgx.pdf">Full-text paper</a></li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>
