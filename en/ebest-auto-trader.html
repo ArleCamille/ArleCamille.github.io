@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Development of an automatic stock trade app | About Hyeseon
+</title>
+  <link rel="canonical" href="https://arlecamille.github.io/en/ebest-auto-trader.html">
+
+
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://arlecamille.github.io/en/theme/css/theme.css">
+
+  
+  <meta name="description" content="This is a semi-automatic stock trade app which is backed by the algorithm thought by the client.">
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+    <div class="col-sm-4">
+      <a href="https://arlecamille.github.io/en/">
+        <img class="img-fluid rounded" src=https://arlecamille.github.io/en/images/header.jpg alt="About Hyeseon">
+      </a>
+    </div>
+  <div class="col-sm-8">
+    <h1 class="title"><a href="https://arlecamille.github.io/en/">About Hyeseon</a></h1>
+      <p class="text-muted">Hyeseon's walkthrough</p>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://cysec.kr/student_pages/kuenwheeoh.html" target="_blank">Lab personal page</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://arlecamille.github.io/en/pages/about-me.html">About me</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Development of an automatic stock trade app
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2024-07-26T18:00:00+09:00">
+          <i class="fas fa-clock"></i>
+          26/07/2024
+        </li>
+        <li class="list-inline-item">
+          <i class="fas fa-folder-open"></i>
+          <a href="https://arlecamille.github.io/en/category/contracted-projects.html">Contracted Projects</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fas fa-user"></i>
+              <a href="https://arlecamille.github.io/en/author/hyeseon-oh.html">Hyeseon Oh</a>          </li>
+          <li class="list-inline-item">
+            <i class="fas fa-tag"></i>
+              <a href="https://arlecamille.github.io/en/tag/project.html">#project</a>,               <a href="https://arlecamille.github.io/en/tag/contracted.html">#contracted</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>About the Project</h1>
+<p>There is an equation which the client thought based on the economic indices, and the client requested me to develop an application which automatically trades stocks due to the equation. The program consists of three parts: i. the part which fetches the indices, ii. the part which fetches the account information and iii. the part which actually performs the trade.</p>
+<h2>Fetching the indices</h2>
+<p>Considering the real-time property and the availability of the application, the client and I agreed on some websites to fetch indices from. They were fetched from i. the stock market API unrelated to the account information, ii. websites which provide information with JSON format and iii. websites which provide information with Microsoft Excel format. Then the data was combined in one place after JSON serialization and Excel file deciphering.</p>
+<h2>Fetching the account information</h2>
+<p>Next, from the market API, the program fetches the stock amount and the trade logs. Since the framework which I used for implementation had an inconsistent API, I had to very carefully approach on error handling. After that, considering the trade log and the stock amounts, the virtual cash data stored in the Core Data storage is changed. Then, the trade amount for each item was decided due to the given equation.</p>
+<h2>Trade in action</h2>
+<p>First, to perform the trade at given times, theoretically we could have the app to run in the background and have it trade on its own. However, eBEST XingAPI (currently LS XingAPI) and many other Korean stock trade APIs did not allow the trade to be performed in the background by requiring the currently running app's window handle in the API. This made me to fall back to the method in which a local push was used to "remind" the phone owner instead, and perform the actual trade when the button is pressed.</p>
+<p>The trade itself is done due to the given trade amount and the price conditions.</p>
+<h1>Figures</h1>
+<figure><img class="img-fluid" src="https://arlecamille.github.io/en/images/ebest-auto-trader.jpg" style="width: 33%;"/><figcaption>Fig. 1 - Main screen of this project. One could check the current economic indices and whether to perform a trade.</figcaption></figure>
+<h1>Contribution and Information</h1>
+<ul>
+<li><strong>Period of Contribution</strong>: 1/2023 ~ 6/2023</li>
+<li><strong>Total Participants</strong>: alone, except for the equation and the data sources</li>
+<li><strong>My Roles</strong>: entire designing and development</li>
+<li><strong>Used Tech Stacks</strong>: <strong>Apple Swift</strong> (SwiftUI, XingAPI)</li>
+</ul>
+<p>I cannot provide the actual software and/or the entire source code due to the NDA.</p>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://arlecamille.github.io/en/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://arlecamille.github.io/en/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+
+</body>
+
+</html>
